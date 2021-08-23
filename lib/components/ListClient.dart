@@ -15,7 +15,6 @@ class _ListClientState extends State<ListClient> {
   Future<void> getClients() async {
     API api = new API();
     var response = await api.getRequest(route: '/client');
-    // print(response);
 
     List<Client> clients = Client.clientsList(response["body"]);
 

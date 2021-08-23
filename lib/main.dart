@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/auth/login.dart';
 import 'package:madera_mobile/components/ListClient.dart';
+
+import 'globals.dart' as globals;
 
 void main() {
   runApp(MyApp());
@@ -14,6 +17,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      routes: {
+        '/home': (context) => MyHomePage(title: 'Madera Mobile Application')
+      },
       home: MyHomePage(title: 'Madera Mobile Application'),
     );
   }
@@ -29,20 +35,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Future<void> test() async {
-  //   API api = new API();
-  //   await api.getRequest(route: '/client');
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // test();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Center(child: ListClient()),
+        body: Center(
+          child: !globals.isLoggedIn ? LoginPage() : ListClient(),
+        ),
       ),
     );
   }
