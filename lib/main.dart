@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/components/ListClient.dart';
 import 'package:madera_mobile/services/api.dart';
 
 void main() {
@@ -43,18 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Application mobile Madera',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ],
-          ),
+          child:
+            ListClient()
         ),
       ),
     );
