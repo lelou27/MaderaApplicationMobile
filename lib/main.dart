@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/services/api.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,8 +29,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<void> test() async {
+    API api = new API();
+    await api.getRequest(route: '/client');
+  }
+
   @override
   Widget build(BuildContext context) {
+    test();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
