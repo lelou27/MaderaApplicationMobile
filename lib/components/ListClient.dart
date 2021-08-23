@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
-import 'package:madera_mobile/pages/DetailClient.dart';
 import 'package:madera_mobile/services/api.dart';
 
 class ListClient extends StatefulWidget {
@@ -33,45 +32,24 @@ class _ListClientState extends State<ListClient> {
           ? Center(
               child: CircularProgressIndicator(),
             )
-          :
-          Column(
-              children: [
-          Container(
-          padding: const EdgeInsets.all(10),
-            color: Colors.grey,
-            child: ListTile(
-              title: Text("Clients"),
-              trailing: Icon(Icons.add),
-            )
-        ),
-        Expanded(
-        child:ListView.builder(
-          itemCount: clients.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(
-                clients[index].first_name,
-              ),
-              subtitle: Text(clients[index].mail),
-              onTap: () {
-                SnackBar snackBar = SnackBar(
-                    content: Text("Tapped : ${clients[index].id}"));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                // Navigator.of(context).push()
+          : ListView.builder(
+              itemCount: clients.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(
+                    clients[index].first_name,
+                  ),
+                  subtitle: Text(clients[index].mail),
+                  onTap: () {
+                    SnackBar snackBar = SnackBar(
+                        content: Text("Tapped : ${clients[index].id}"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    // Navigator.of(context).push()
+                  },
+                  trailing: Icon(Icons.info_outline),
+                );
               },
-              trailing: IconButton(
-                icon: new Icon(Icons.info_outline),
-                onPressed: () {  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SecondRoute(clients[index])),
-                ); },
-              ),
-            );
-          },
-        ),
-          ),
-          ]
-          ),
+            ),
     );
   }
 }
