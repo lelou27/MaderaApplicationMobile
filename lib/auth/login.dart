@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/User.dart';
 import 'package:madera_mobile/services/api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../globals.dart' as globals;
 
@@ -11,6 +12,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   String _identifiant = "";
   String _password = "";
 
@@ -40,8 +43,24 @@ class _LoginPageState extends State<LoginPage> {
     globals.isLoggedIn = true;
     globals.globalUser = user;
 
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/home', ModalRoute.withName('/home'));
+    this.setLoginPreferences(user);
+  }
+
+  void setLoginPreferences(User user) async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      prefs.setStringList("user",
+          [user.username, user.access_token, user.role]).then((bool success) {
+        if (success) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          setState(() {
+            _errorLogin = "Impossible de mettre à jour le stockage local.";
+          });
+        }
+      });
+    });
   }
 
   void togglePasswordView() {

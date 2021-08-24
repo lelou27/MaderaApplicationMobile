@@ -18,9 +18,11 @@ class _ListClientState extends State<ListClient> {
 
     List<Client> clients = Client.clientsList(response["body"]);
 
-    this.setState(() {
-      this.clients = clients;
-    });
+    if (mounted) {
+      this.setState(() {
+        this.clients = clients;
+      });
+    }
   }
 
   @override

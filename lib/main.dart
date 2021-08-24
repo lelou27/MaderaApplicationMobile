@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/home': (context) => MyHomePage(title: 'Madera Mobile Application')
+        '/home': (context) => MyHomePage(title: 'Madera Mobile Application'),
+        '/login': (context) => LoginPage()
       },
       home: MyHomePage(title: 'Madera Mobile Application'),
     );
@@ -35,15 +36,52 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _isLogged = false;
+
+  void initState() {
+    super.initState();
+
+    globals.isLogged().then((bool isLogged) {
+      setState(() {
+        _isLogged = isLogged;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!_isLogged) {
+      return SafeArea(
+        child: Scaffold(
+          body: Center(
+            child: LoginPage(),
+          ),
+        ),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          actions: [
+            _isLogged
+                ? IconButton(
+                    icon: const Icon(Icons.logout),
+                    color: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        _isLogged = !_isLogged;
+                      });
+
+                      globals.logout();
+                    },
+                  )
+                : Padding(padding: EdgeInsets.zero)
+          ],
         ),
         body: Center(
-          child: !globals.isLoggedIn ? LoginPage() : ListClient(),
+          child: ListClient(),
         ),
       ),
     );
