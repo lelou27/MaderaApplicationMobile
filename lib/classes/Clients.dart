@@ -1,5 +1,4 @@
 class Client {
-  final String id;
   final String first_name;
   final String mail;
   final String phone;
@@ -9,6 +8,16 @@ class Client {
   final String country;
 
   Client({required this.id, required this.first_name, required this.mail, required this.phone, required this.address, required this.postal_code, required this.city, required this.country});
+
+  Map<String, dynamic> toJson() => {
+    'first_name': first_name,
+    'mail': mail,
+    'address': address,
+    'postal_code': postal_code,
+    'city': city,
+    'phone': phone,
+    'country': country,
+  };
 
   static List<Client> clientsList(List<dynamic> body) {
     List<Client> clientsList = [];
@@ -24,7 +33,6 @@ class Client {
 
   static Client getBaseClient(clientJson) {
     return Client(
-      id: clientJson["_id"],
       first_name: clientJson["first_name"],
       mail: clientJson["mail"],
       phone: clientJson["phone"],
