@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/services/api.dart';
+import 'package:flutter/services.dart';
 
 import '../globals.dart' as globals;
 
@@ -105,6 +106,8 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
                   hintText: 'Téléphone',
                   labelText: 'Téléphone *',
                 ),
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                keyboardType: TextInputType.number,
                 onChanged: (value) => setState(() => _phone = value),
                 validator: (String? value) {
                   return (value == null || value == "")
@@ -137,6 +140,8 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
                   hintText: 'CodePostal',
                   labelText: 'Code postal *',
                 ),
+                inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+                keyboardType: TextInputType.number,
                 onChanged: (value) => setState(() => _postal_code = value),
                 validator: (String? value) {
                   return (value == null || value == "")
