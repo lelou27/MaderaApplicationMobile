@@ -46,7 +46,11 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
     //
     // globals.isLoggedIn = true;
     // globals.globalUser = user;
+    final snackBar = SnackBar(content: Text('Client ajouté'));
 
+// Find the ScaffoldMessenger in the widget tree
+// and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/home', ModalRoute.withName('/home'));
   }
