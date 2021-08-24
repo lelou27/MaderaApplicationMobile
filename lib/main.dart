@@ -21,10 +21,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => MyHomePage(title: 'Madera Mobile Application'),
         '/login': (context) => LoginPage()
-        '/addClient': (context) => AjoutClientPage(),
+        '/ajoutClient': (context) => AjoutClientPage(),
       },
-      home: AjoutClientPage(),
-      // home: MyHomePage(title: 'Madera Mobile Application'),
+      // home: AjoutClientPage(),
+      home: MyHomePage(title: 'Madera Mobile Application'),
     );
   }
 }

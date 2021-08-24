@@ -70,8 +70,8 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
               TextFormField(
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
-                  hintText: 'FirstName',
-                  labelText: 'First name *',
+                  hintText: 'Nom',
+                  labelText: 'Nom *',
                 ),
                 onChanged: (value) => setState(() => _first_name = value),
                 validator: (String? value) {
