@@ -8,6 +8,7 @@ import 'classes/User.dart';
 bool isLoggedIn = false;
 User globalUser = setAnonymous();
 API api = new API();
+String applicationName = "Madera Mobile Application";
 
 User setAnonymous() {
   return new User(username: "anonymous", password: "anonymous");
@@ -25,7 +26,7 @@ Future<bool> isLogged() async {
   return isLoggedIn;
 }
 
-Future<void> logout() async {
+Future<void> logout(context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setStringList("user", []);
   globalUser = setAnonymous();

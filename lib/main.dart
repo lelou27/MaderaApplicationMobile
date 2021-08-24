@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:madera_mobile/ajoutCLient/ajoutClient.dart';
 import 'package:madera_mobile/auth/login.dart';
 import 'package:madera_mobile/components/ListClient.dart';
+import 'package:madera_mobile/components/MaderaAppBar.dart';
+import 'package:madera_mobile/page/Home.dart';
 
 import 'globals.dart' as globals;
 
@@ -13,26 +15,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Madera Mobile Application',
+      title: globals.applicationName,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/home': (context) => MyHomePage(title: 'Madera Mobile Application'),
+        '/home': (context) => MyHomePage(),
+        '/listClient': (context) => ListClient(),
         '/login': (context) => LoginPage(),
         '/ajoutClient': (context) => AjoutClientPage(),
       },
-      // home: AjoutClientPage(),
-      home: MyHomePage(title: 'Madera Mobile Application'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -51,6 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void logout() {
+    setState(() {
+      _isLogged = !_isLogged;
+    });
+
+    globals.logout(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!_isLogged) {
@@ -65,26 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          actions: [
-            _isLogged
-                ? IconButton(
-                    icon: const Icon(Icons.logout),
-                    color: Colors.white,
-                    onPressed: () {
-                      setState(() {
-                        _isLogged = !_isLogged;
-                      });
-
-                      globals.logout();
-                    },
-                  )
-                : Padding(padding: EdgeInsets.zero)
-          ],
-        ),
+        appBar: getAppBar(context),
         body: Center(
-          child: ListClient(),
+          child: HomePage(),
         ),
       ),
     );
