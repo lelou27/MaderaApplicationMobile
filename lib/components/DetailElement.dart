@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailElement extends StatefulWidget {
-  @override
   String data;
   String title;
   DetailElement({required this.title, required this.data});
 
+  @override
   _DetailElementState createState() => _DetailElementState();
 }
 
