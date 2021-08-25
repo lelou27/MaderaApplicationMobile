@@ -62,7 +62,8 @@ class _ListClientState extends State<ListClient> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ListDevis(client: clients[index])),
+                                  ListDevis(clients[index])
+                          ),
                         );
                         // Navigator.of(context).push()
                       },

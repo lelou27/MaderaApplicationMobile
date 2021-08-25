@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/DetailElement.dart';
-import 'package:madera_mobile/components/Map.dart';
+import 'package:madera_mobile/components/Maps.dart';
 
 class DetailClient extends StatelessWidget {
   final Client client;
@@ -90,7 +90,7 @@ class DetailClient extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Map(client: this.client)
+                    Maps(client: this.client)
                   ],
                 ),
               ),

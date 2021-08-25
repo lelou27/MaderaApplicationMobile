@@ -26,7 +26,14 @@ class _DetailElementState extends State<DetailElement> {
             ),
             Row(
                 children: <Widget>[
-                  Text(widget.data, style: TextStyle(height: 1.5,fontSize: 25))
+                  Flexible(
+                    child: Text(widget.data,
+                      maxLines: 1,
+                      softWrap: false,
+                      overflow: TextOverflow.fade,
+                        style: TextStyle(height: 1.5,fontSize: 25)
+                    ),
+                  ),
                 ]
             ),
           ]

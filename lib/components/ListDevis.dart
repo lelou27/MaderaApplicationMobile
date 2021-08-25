@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/classes/Devis.dart';
 import 'package:madera_mobile/page/DetailClient.dart';
+import 'package:madera_mobile/page/DetailDevis.dart';
 import 'package:madera_mobile/services/api.dart';
 
 class ListDevis extends StatefulWidget {
-  Client client;
-  ListDevis({required this.client});
+Client client;
+  ListDevis(this.client);
 
   @override
   _ListDevisState createState() => _ListDevisState();
@@ -18,8 +19,10 @@ class _ListDevisState extends State<ListDevis> {
 
   Future<void> getDevis(id) async {
     API api = new API();
-    var response = await api.getRequest(route: '/devis/all/${id}' );
+    var response = await api.getRequest(route: '/devis/all${id == ""? '' : '/${id}'}');
+    //print(response["body"][0]);
     List<Devis> devis = Devis.devisList(response["body"]);
+    //print(devis[0].modules);
     if (mounted) {
       this.setState(() {
         this.devis = devis;
@@ -50,10 +53,13 @@ class _ListDevisState extends State<ListDevis> {
                 ),
                 subtitle: Text(devis[index].dateDevis),
                 onTap: () {
-                  SnackBar snackBar = SnackBar(
-                      content: Text("Tapped : ${devis[index].id}"));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  // Navigator.of(context).push()
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailDevis(devis[index])
+                    ),
+                  );
                 },
               );
             },

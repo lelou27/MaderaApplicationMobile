@@ -5,15 +5,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:madera_mobile/classes/Clients.dart';
 
-class Map extends StatefulWidget {
+class Maps extends StatefulWidget {
   Client client;
-  Map({required this.client});
+  Maps({required this.client});
 
   @override
   _MapState createState() => _MapState();
 }
 
- class _MapState extends State<Map> {
+ class _MapState extends State<Maps> {
    List<Location> locations = [];
    Exception err = new Exception();
 
