@@ -41,13 +41,6 @@ class _ListClientState extends State<ListClient> {
                 child: CircularProgressIndicator(),
               )
             : Column(children: [
-                Container(
-                    padding: const EdgeInsets.all(10),
-                    color: Colors.grey,
-                    child: ListTile(
-                      title: Text("Clients"),
-                      trailing: Icon(Icons.add),
-                    )),
                 Expanded(
                   child: ListView.builder(
                     itemCount: clients.length,
@@ -78,6 +71,13 @@ class _ListClientState extends State<ListClient> {
                   ),
                 ),
               ]),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/ajoutClient");
+          },
+          child: const Icon(Icons.add),
+          backgroundColor: Colors.blue,
+        ),
       ),
     );
   }
