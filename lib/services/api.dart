@@ -1,11 +1,15 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:madera_mobile/classes/Clients.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:madera_mobile/classes/User.dart';
 
+import '../globals.dart' as globals;
+
 class API {
-  final String API_URL = "http://10.0.2.2:5000";
+  final String API_URL = globals.apiUrl;
 
   Future<Map<String, dynamic>> getRequest({required String route}) async {
     Map<String, dynamic> result = {"code": 1, "body": ""};
@@ -22,6 +26,20 @@ class API {
     }
 
     return result;
+  }
+
+  Future<Map<String, dynamic>> sendImage(
+      String route, XFile image, String idClient) async {
+    Map<String, dynamic> result = {"code": 1, "body": ""};
+
+    var formData = FormData.fromMap({
+      'idClient': idClient,
+      'image': MultipartFile.fromFileSync("./assets/imgs/default.jpg",
+          filename: 'clientImage.jpg')
+    });
+    var response = await Dio().post('/info', data: formData);
+
+    return response.data;
   }
 
   Future<Map<String, dynamic>> auth(User user) async {

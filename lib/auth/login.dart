@@ -71,64 +71,72 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.all(45),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.person),
-                  hintText: 'Identifiant',
-                  labelText: 'Identifiant *',
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(45),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Identifiant',
+                        labelText: 'Identifiant *',
+                      ),
+                      onChanged: (value) =>
+                          setState(() => _identifiant = value),
+                      validator: (String? value) {
+                        return (value == null || value == "")
+                            ? 'Veuillez saisir un identifiant.'
+                            : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.password),
+                        hintText: 'Mot de passe',
+                        labelText: 'Mot de passe *',
+                        suffix: InkWell(
+                          child: Icon(_isHidden
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onTap: togglePasswordView,
+                        ),
+                      ),
+                      obscureText: _isHidden,
+                      onChanged: (value) => setState(() => _password = value),
+                      validator: (String? value) {
+                        return (value == null || value == "")
+                            ? 'Veuillez saisir un mot de passe.'
+                            : null;
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        _errorLogin != "" ? _errorLogin : "",
+                        style: TextStyle(color: Colors.red, fontSize: 16),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: login,
+                      child: const Text('Se connecter'),
+                    ),
+                  ],
                 ),
-                onChanged: (value) => setState(() => _identifiant = value),
-                validator: (String? value) {
-                  return (value == null || value == "")
-                      ? 'Veuillez saisir un identifiant.'
-                      : null;
-                },
               ),
-              SizedBox(
-                height: 50,
-              ),
-              TextFormField(
-                decoration: InputDecoration(
-                  icon: Icon(Icons.password),
-                  hintText: 'Mot de passe',
-                  labelText: 'Mot de passe *',
-                  suffix: InkWell(
-                    child: Icon(
-                        _isHidden ? Icons.visibility : Icons.visibility_off),
-                    onTap: togglePasswordView,
-                  ),
-                ),
-                obscureText: _isHidden,
-                onChanged: (value) => setState(() => _password = value),
-                validator: (String? value) {
-                  return (value == null || value == "")
-                      ? 'Veuillez saisir un mot de passe.'
-                      : null;
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  _errorLogin != "" ? _errorLogin : "",
-                  style: TextStyle(color: Colors.red, fontSize: 16),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: login,
-                child: const Text('Se connecter'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
