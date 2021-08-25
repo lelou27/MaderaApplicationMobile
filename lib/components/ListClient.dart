@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
+import 'package:madera_mobile/components/ListDevis.dart';
 import 'package:madera_mobile/page/DetailClient.dart';
 import 'package:madera_mobile/services/api.dart';
 
@@ -25,9 +26,12 @@ class _ListClientState extends State<ListClient> {
     }
   }
 
+  void initState() {
+    getClients();
+  }
+
   @override
   Widget build(BuildContext context) {
-    getClients();
 
     return Scaffold(
       body: clients.length == 0
@@ -54,9 +58,12 @@ class _ListClientState extends State<ListClient> {
                       ),
                       subtitle: Text(clients[index].mail),
                       onTap: () {
-                        SnackBar snackBar = SnackBar(
-                            content: Text("Tapped : ${clients[index].id}"));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ListDevis(client: clients[index])),
+                        );
                         // Navigator.of(context).push()
                       },
                       trailing: IconButton(
