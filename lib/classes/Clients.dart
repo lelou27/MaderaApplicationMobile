@@ -40,6 +40,14 @@ class Client {
     return clientsList;
   }
 
+  static Client client(dynamic body) {
+    dynamic results = body;
+
+      Client client = getBaseClient(results);
+
+    return client;
+  }
+
   static Client getBaseClient(clientJson) {
     return Client(
       id: clientJson["_id"],

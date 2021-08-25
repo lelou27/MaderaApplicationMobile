@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
+import 'package:madera_mobile/components/ListDevis.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
 import 'package:madera_mobile/page/DetailClient.dart';
 import 'package:madera_mobile/services/api.dart';
@@ -51,9 +52,16 @@ class _ListClientState extends State<ListClient> {
                         ),
                         subtitle: Text(clients[index].mail),
                         onTap: () {
-                          SnackBar snackBar = SnackBar(
-                              content: Text("Tapped : ${clients[index].id}"));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailClient(clients[index])),
+                          );
+
+                          // SnackBar snackBar = SnackBar(
+                          //     content: Text("Tapped : ${clients[index].id}"));
+                          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                         trailing: IconButton(
                           icon: new Icon(Icons.info_outline),
@@ -62,7 +70,7 @@ class _ListClientState extends State<ListClient> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DetailClient(clients[index])),
+                                      ListDevis(clients[index])),
                             );
                           },
                         ),

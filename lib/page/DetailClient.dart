@@ -8,8 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/DetailElement.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
-import 'package:madera_mobile/components/Map.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:madera_mobile/components/Maps.dart';
 
 import '../globals.dart' as globals;
 
@@ -186,7 +186,7 @@ class _DetailClientState extends State<DetailClient> {
                           ],
                         ),
                       ),
-                      Map(client: widget.client),
+                      Maps(client: widget.client),
                     ],
                   ),
                 ),
