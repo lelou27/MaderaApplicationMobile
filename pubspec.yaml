@@ -36,6 +36,9 @@ dependencies:
   image_picker: ^0.8.3+3
   dio: ^4.0.0
   path_provider: ^2.0.2
+  flutter_map: ^0.13.1
+  geocoding: ^2.0.0
+  flutter_scroll_to_top: ^1.1.0
 
 dev_dependencies:
   flutter_test:
