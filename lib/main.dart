@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/ajoutCLient/ajoutClient.dart';
 import 'package:madera_mobile/auth/login.dart';
 import 'package:madera_mobile/components/ListClient.dart';
 
@@ -19,8 +20,10 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/home': (context) => MyHomePage(title: 'Madera Mobile Application'),
-        '/login': (context) => LoginPage()
+        '/login': (context) => LoginPage(),
+        '/ajoutClient': (context) => AjoutClientPage(),
       },
+      // home: AjoutClientPage(),
       home: MyHomePage(title: 'Madera Mobile Application'),
     );
   }

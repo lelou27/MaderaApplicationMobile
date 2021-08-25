@@ -32,47 +32,49 @@ class _ListClientState extends State<ListClient> {
     return Scaffold(
       body: clients.length == 0
           ? Center(
-        child: CircularProgressIndicator(),
-      )
-          :
-      Column(
-          children: [
-            Container(
-                padding: const EdgeInsets.all(10),
-                color: Colors.grey,
-                child: ListTile(
-                  title: Text("Clients"),
-                  trailing: Icon(Icons.add),
-                )
-            ),
-            Expanded(
-              child:ListView.builder(
-                itemCount: clients.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      clients[index].first_name,
-                    ),
-                    subtitle: Text(clients[index].mail),
-                    onTap: () {
-                      SnackBar snackBar = SnackBar(
-                          content: Text("Tapped : ${clients[index].id}"));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      // Navigator.of(context).push()
-                    },
-                    trailing: IconButton(
-                      icon: new Icon(Icons.info_outline),
-                      onPressed: () {  Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DetailClient(clients[index])),
-                      ); },
-                    ),
-                  );
-                },
+              child: CircularProgressIndicator(),
+            )
+          : Column(children: [
+              Container(
+                  padding: const EdgeInsets.all(10),
+                  color: Colors.grey,
+                  child: ListTile(
+                    title: Text("Clients"),
+                    trailing: Icon(Icons.add),
+                    onTap: () =>
+                        Navigator.of(context).pushNamed("/ajoutClient"),
+                  )),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: clients.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        clients[index].first_name,
+                      ),
+                      subtitle: Text(clients[index].mail),
+                      onTap: () {
+                        SnackBar snackBar = SnackBar(
+                            content: Text("Tapped : ${clients[index].id}"));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        // Navigator.of(context).push()
+                      },
+                      trailing: IconButton(
+                        icon: new Icon(Icons.info_outline),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DetailClient(clients[index])),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          ]
-      ),
+            ]),
     );
   }
 }

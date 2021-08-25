@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/classes/User.dart';
 
 class API {
@@ -36,7 +37,24 @@ class API {
       result["code"] = 1;
       result["body"] = "error";
     }
+    return result;
+  }
 
+  Future<Map<String, dynamic>> ajoutcli(Client client) async {
+    Map<String, dynamic> result = {"code": 1, "body": ""};
+
+    Uri url = Uri.parse('$API_URL/client/create');
+    var response = await http.post(url, body: client.toJson());
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      result["code"] = 0;
+      result["body"] = jsonDecode(response.body);
+    } else {
+      result["code"] = 1;
+      result["body"] = "error";
+    }
+    print(response.body);
+    print(client.toJson());
     return result;
   }
 }
