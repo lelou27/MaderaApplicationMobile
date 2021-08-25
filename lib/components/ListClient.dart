@@ -13,6 +13,11 @@ class ListClient extends StatefulWidget {
 class _ListClientState extends State<ListClient> {
   List<Client> clients = [];
 
+  void initState() {
+    super.initState();
+    getClients();
+  }
+
   Future<void> getClients() async {
     API api = new API();
     var response = await api.getRequest(route: '/client');
@@ -28,8 +33,6 @@ class _ListClientState extends State<ListClient> {
 
   @override
   Widget build(BuildContext context) {
-    getClients();
-
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),

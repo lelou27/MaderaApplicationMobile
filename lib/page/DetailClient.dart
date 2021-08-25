@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/DetailElement.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
+import 'package:path_provider/path_provider.dart';
+
+import '../globals.dart' as globals;
 
 class DetailClient extends StatefulWidget {
   final Client client;
@@ -19,16 +23,67 @@ class DetailClient extends StatefulWidget {
 class _DetailClientState extends State<DetailClient> {
   final ImagePicker _picker = ImagePicker();
   XFile? _image = null;
+  bool _isLoading = true;
+
+  void initState() {
+    super.initState();
+    getImageByClient();
+  }
 
   void pickImage(ImageSource imageSource) async {
     _image = (await _picker.pickImage(source: imageSource))!;
     setState(() {
       _image = _image;
     });
+
+    sendImageApi();
+  }
+
+  Future<void> getImageByClient() async {
+    Dio dio = new Dio();
+    final directory = await getApplicationDocumentsDirectory();
+
+    var response =
+        await dio.get("${globals.apiUrl}/client-image/${widget.client.id}");
+
+    if (response.data != null && response.data != "") {
+      await dio.download(
+          "${globals.apiUrl}/client-image/download/${widget.client.id}",
+          "${directory.path}/assets/imgs/${widget.client.id}.jpg");
+
+      setState(() {
+        _image = XFile("${directory.path}/assets/imgs/${widget.client.id}.jpg");
+      });
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Future<void> sendImageApi() async {
+    Dio dio = new Dio();
+
+    var formData = FormData.fromMap({
+      'idClient': widget.client.id,
+      'image':
+          await MultipartFile.fromFile(_image!.path, filename: 'upload.jpg')
+    });
+
+    await dio.post('${globals.apiUrl}/client-image/upload', data: formData);
   }
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return SafeArea(
+          child: Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ));
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),

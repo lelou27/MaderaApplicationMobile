@@ -9,6 +9,7 @@ bool isLoggedIn = false;
 User globalUser = setAnonymous();
 API api = new API();
 String applicationName = "Madera Mobile Application";
+String apiUrl = "http://10.0.2.2:5000";
 
 User setAnonymous() {
   return new User(username: "anonymous", password: "anonymous");
