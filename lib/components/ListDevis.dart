@@ -20,10 +20,10 @@ class _ListDevisState extends State<ListDevis> {
   Future<void> getDevis(id) async {
     API api = new API();
     var response =
-        await api.getRequest(route: '/devis/all${id == "" ? '' : '/${id}'}');
-
+        await api.getRequest(route: '/devis/all${id == "" ? 'Cs' : '/${id}'}');
+    print(response);
     List<Devis> devis = Devis.devisList(response["body"]);
-
+    print(devis);
     if (mounted) {
       this.setState(() {
         this.devis = devis;
