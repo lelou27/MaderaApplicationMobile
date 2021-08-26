@@ -8,8 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/DetailElement.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:madera_mobile/components/Maps.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../globals.dart' as globals;
 
@@ -51,13 +51,17 @@ class _DetailClientState extends State<DetailClient> {
         await dio.get("${globals.apiUrl}/client-image/${widget.client.id}");
 
     if (response.data != null && response.data != "") {
-      await dio.download(
-          "${globals.apiUrl}/client-image/download/${widget.client.id}",
-          "${directory.path}/assets/imgs/${widget.client.id}.jpg");
+      var now = DateTime.now();
 
-      setState(() {
-        _image = XFile("${directory.path}/assets/imgs/${widget.client.id}.jpg");
-      });
+      final dir = Directory(directory.path + "/assets/imgs/");
+      dir.deleteSync(recursive: true);
+
+      await dio
+          .download(
+              "${globals.apiUrl}/client-image/download/${widget.client.id}",
+              "${directory.path}/assets/imgs/${widget.client.id}-$now.jpg")
+          .whenComplete(() => setState(() => _image = XFile(
+              "${directory.path}/assets/imgs/${widget.client.id}-$now.jpg")));
     }
 
     setState(() {
