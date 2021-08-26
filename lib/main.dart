@@ -105,10 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),
-        body: SingleChildScrollView(
-          child: Center(
-            child: HomePage(),
-          ),
+        body: Center(
+          child: HomePage(),
         ),
       ),
     );
