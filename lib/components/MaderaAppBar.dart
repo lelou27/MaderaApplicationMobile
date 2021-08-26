@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../globals.dart' as globals;
 
 AppBar getAppBar(context) {
   return AppBar(
-    title: Text(globals.applicationName),
+    title: Center(child: Image.asset("assets/imgs/logo.png",height: 55,)),
     actions: [
       globals.isLoggedIn
           ? IconButton(
