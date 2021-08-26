@@ -83,6 +83,8 @@ class _DetailClientState extends State<DetailClient> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     if (_isLoading) {
       return SafeArea(
           child: Scaffold(
@@ -105,92 +107,201 @@ class _DetailClientState extends State<DetailClient> {
               child: Container(
                 decoration: BoxDecoration(color: Colors.black12),
                 child: Center(
-                  child: Column(
+                  child:
+                  Column(
                     children: [
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        padding: EdgeInsets.only(
-                            left: 0, top: 5, right: 0, bottom: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.white),
-                        child: Column(
-                          children: [
-                            _image == null
-                                ? Container(
-                                    width: 190.0,
-                                    height: 190.0,
-                                    child:
-                                        Image.asset("assets/imgs/default.jpg"),
-                                  )
-                                : Container(
-                                    width: 190.0,
-                                    height: 190.0,
-                                    decoration: new BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: new DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: FileImage(
-                                          File(_image!.path),
-                                        ),
+                      isLandscape ?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            padding: EdgeInsets.only(
+                                left: 30, top: 5, right: 30, bottom: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 10.0, // shadow direction: bottom right
+                                )
+                              ],),
+                            child: Column(
+                              children: [
+                                _image == null
+                                    ? Container(
+                                  width: 190.0,
+                                  height: 190.0,
+                                  child:
+                                  Image.asset("assets/imgs/default.jpg"),
+                                )
+                                    : Container(
+                                  width: 190.0,
+                                  height: 190.0,
+                                  decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: FileImage(
+                                        File(_image!.path),
                                       ),
                                     ),
                                   ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                IconButton(
-                                  onPressed: () =>
-                                      this.pickImage(ImageSource.camera),
-                                  icon: Icon(Icons.camera),
                                 ),
-                                IconButton(
-                                  onPressed: () =>
-                                      this.pickImage(ImageSource.gallery),
-                                  icon: Icon(Icons.image),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () =>
+                                          this.pickImage(ImageSource.camera),
+                                      icon: Icon(Icons.camera),
+                                    ),
+                                    IconButton(
+                                      onPressed: () =>
+                                          this.pickImage(ImageSource.gallery),
+                                      icon: Icon(Icons.image),
+                                    ),
+                                  ],
+                                ),
+                                Center(
+                                  child: Text(widget.client.first_name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 35)),
+                                ),
+                                Center(
+                                  child: Text(widget.client.mail,
+                                      style: TextStyle(
+                                          height: 2,
+                                          fontSize: 20,
+                                          color: Colors.black38)),
+                                ),
+                                Center(
+                                  child: Text(widget.client.phone,
+                                      style: TextStyle(
+                                          height: 2,
+                                          fontSize: 20,
+                                          color: Colors.black38)),
                                 ),
                               ],
                             ),
-                            Center(
-                              child: Text(widget.client.first_name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 35)),
+                          ),
+                          Expanded(child:
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                DetailElement(
+                                    title: 'Adresse', data: widget.client.address),
+                                DetailElement(
+                                    title: 'Code postal',
+                                    data: widget.client.postal_code),
+                                DetailElement(
+                                    title: 'Ville', data: widget.client.city),
+                                DetailElement(
+                                    title: 'Pays', data: widget.client.country),
+                              ],
                             ),
-                            Center(
-                              child: Text(widget.client.mail,
-                                  style: TextStyle(
-                                      height: 2,
-                                      fontSize: 20,
-                                      color: Colors.black38)),
+                          ),)
+                        ],
+                      ):
+                      Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            padding: EdgeInsets.only(
+                                left: 0, top: 5, right: 0, bottom: 5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 10.0, // shadow direction: bottom right
+                                )
+                              ],),
+                            child: Column(
+                              children: [
+                                _image == null
+                                    ? Container(
+                                  width: 190.0,
+                                  height: 190.0,
+                                  child:
+                                  Image.asset("assets/imgs/default.jpg"),
+                                )
+                                    : Container(
+                                  width: 190.0,
+                                  height: 190.0,
+                                  decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: FileImage(
+                                        File(_image!.path),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () =>
+                                          this.pickImage(ImageSource.camera),
+                                      icon: Icon(Icons.camera),
+                                    ),
+                                    IconButton(
+                                      onPressed: () =>
+                                          this.pickImage(ImageSource.gallery),
+                                      icon: Icon(Icons.image),
+                                    ),
+                                  ],
+                                ),
+                                Center(
+                                  child: Text(widget.client.first_name,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 35)),
+                                ),
+                                Center(
+                                  child: Text(widget.client.mail,
+                                      style: TextStyle(
+                                          height: 2,
+                                          fontSize: 20,
+                                          color: Colors.black38)),
+                                ),
+                                Center(
+                                  child: Text(widget.client.phone,
+                                      style: TextStyle(
+                                          height: 2,
+                                          fontSize: 20,
+                                          color: Colors.black38)),
+                                ),
+                              ],
                             ),
-                            Center(
-                              child: Text(widget.client.phone,
-                                  style: TextStyle(
-                                      height: 2,
-                                      fontSize: 20,
-                                      color: Colors.black38)),
+                          ),
+                          Container(
+                            margin: EdgeInsets.all(20),
+                            child: Column(
+                              children: [
+                                DetailElement(
+                                    title: 'Adresse', data: widget.client.address),
+                                DetailElement(
+                                    title: 'Code postal',
+                                    data: widget.client.postal_code),
+                                DetailElement(
+                                    title: 'Ville', data: widget.client.city),
+                                DetailElement(
+                                    title: 'Pays', data: widget.client.country),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            DetailElement(
-                                title: 'Adresse', data: widget.client.address),
-                            DetailElement(
-                                title: 'Code postal',
-                                data: widget.client.postal_code),
-                            DetailElement(
-                                title: 'Ville', data: widget.client.city),
-                            DetailElement(
-                                title: 'Pays', data: widget.client.country),
-                          ],
-                        ),
-                      ),
-                      Maps(client: widget.client),
+                      Maps(client: widget.client)
                     ],
                   ),
                 ),
