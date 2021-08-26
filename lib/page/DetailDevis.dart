@@ -4,6 +4,7 @@ import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/classes/Devis.dart';
 import 'package:madera_mobile/classes/Module.dart';
 import 'package:madera_mobile/components/DetailElement.dart';
+import 'package:madera_mobile/components/MaderaAppBar.dart';
 import 'package:madera_mobile/services/api.dart';
 
 class DetailDevis extends StatefulWidget {
@@ -12,6 +13,7 @@ class DetailDevis extends StatefulWidget {
   @override
   _DetailDevisState createState() => _DetailDevisState();
 }
+
 class _DetailDevisState extends State<DetailDevis> {
   String clientName = "";
   Map test = Map();
@@ -59,62 +61,58 @@ class _DetailDevisState extends State<DetailDevis> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Madera Mobile Application'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: Center(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            DetailElement(
-                                title: 'Nom du projet',
-                                data: widget.devis.nomProjet),
-                            DetailElement(
-                                title: 'Date du devis',
-                                data: widget.devis.dateDevis),
-                            DetailElement(title: 'Nom du Client',
-                                data: clientName),
-                          ],
-                        ),
-                      ),
-                    ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: getAppBar(context),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                )
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              DetailElement(
+                                  title: 'Nom du projet',
+                                  data: widget.devis.nomProjet),
+                              DetailElement(
+                                  title: 'Date du devis',
+                                  data: widget.devis.dateDevis),
+                              DetailElement(
+                                  title: 'Nom du Client', data: clientName),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
             ),
-          ),
-          Expanded(
-            child: _buildList(),
-          )
-
-        ],
+            Expanded(
+              child: _buildList(),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildList() {
-    return
-      ListView.builder(
+    return ListView.builder(
       itemCount: test.length,
-      itemBuilder: (context,index){
+      itemBuilder: (context, index) {
         Module key = test.keys.elementAt(index);
         return ListTile(
-          title: Text(key.nomModule),
-            subtitle: Text("${test[key].toString()} exemplaire")
-        );
+            title: Text(key.nomModule),
+            subtitle: Text("${test[key].toString()} exemplaire"));
       },
     );
   }
