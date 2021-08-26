@@ -40,6 +40,7 @@ class _ListDevisState extends State<ListDevis> {
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),
+        backgroundColor: Color(0xffE5E5E5),
         body: devis.length == 0
             ? Center(
                 child: Text("Pas de devis"),
@@ -49,19 +50,23 @@ class _ListDevisState extends State<ListDevis> {
                   child: ListView.builder(
                     itemCount: devis.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          devis[index].nomProjet,
-                        ),
-                        subtitle: Text(devis[index].dateDevis),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailDevis(devis[index])),
-                          );
-                        },
+                      return Card(
+                        elevation: 10,
+                        margin: EdgeInsets.only(left: 15,right: 15,top: 10),
+                        child: ListTile(
+                          title: Text(
+                            devis[index].nomProjet,
+                          ),
+                          subtitle: Text(devis[index].dateDevis),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailDevis(devis[index])),
+                            );
+                          },
+                        )
                       );
                     },
                   ),
