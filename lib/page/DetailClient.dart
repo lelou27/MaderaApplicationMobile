@@ -116,7 +116,14 @@ class _DetailClientState extends State<DetailClient> {
                                 left: 30, top: 5, right: 30, bottom: 5),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                                color: Colors.white),
+                                color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 10.0, // shadow direction: bottom right
+                                )
+                              ],),
                             child: Column(
                               children: [
                                 _image == null
@@ -204,7 +211,14 @@ class _DetailClientState extends State<DetailClient> {
                                 left: 0, top: 5, right: 0, bottom: 5),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                                color: Colors.white),
+                                color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 10.0, // shadow direction: bottom right
+                                )
+                              ],),
                             child: Column(
                               children: [
                                 _image == null
