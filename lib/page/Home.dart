@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/ajoutCLient/ajoutClient.dart';
 import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/CardHome.dart';
 import 'package:madera_mobile/components/ListClient.dart';
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -40,21 +43,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          SizedBox(
-            height: 100,
-          ),
+          isLandscape ?
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CardHome(Icons.list, "Liste des clients", ListClient()),
-                CardHome(Icons.list_alt, "Liste des devis", ListDevis(new Client(id: "", first_name: "first_name", mail: "mail", phone: "phone", address: "address", postal_code: "postal_code", city: "city", country: "country"))),
+              CardHome(Icons.list_alt, " Liste des devis ", ListDevis(new Client(id: "", first_name: "first_name", mail: "mail", phone: "phone", address: "address", postal_code: "postal_code", city: "city", country: "country"))),
+              CardHome(Icons.add, "Ajouter un client", AjoutClientPage()),
             ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          ):
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CardHome(Icons.list, "Liste des clients", ListClient()),
-              CardHome(Icons.list, "Liste des clients", ListClient()),
+              CardHome(Icons.list_alt, " Liste des devis ", ListDevis(new Client(id: "", first_name: "first_name", mail: "mail", phone: "phone", address: "address", postal_code: "postal_code", city: "city", country: "country"))),
+              CardHome(Icons.add, "Ajouter un client", AjoutClientPage()),
             ],
           ),
         ],
