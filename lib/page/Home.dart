@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/components/CardHome.dart';
+import 'package:madera_mobile/components/ListClient.dart';
+import 'package:madera_mobile/components/ListDevis.dart';
 import 'package:madera_mobile/globals.dart';
 
 class HomePage extends StatefulWidget {
@@ -43,15 +46,15 @@ class _HomePageState extends State<HomePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              CardHome(Icons.list, "Liste des clients", '/listClient'),
-              CardHome(Icons.list_alt, "Liste des devis", '/listClient'),
+              CardHome(Icons.list, "Liste des clients", ListClient()),
+                CardHome(Icons.list_alt, "Liste des devis", ListDevis(new Client(id: "", first_name: "first_name", mail: "mail", phone: "phone", address: "address", postal_code: "postal_code", city: "city", country: "country"))),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              CardHome(Icons.list, "Liste des clients", '/listClient'),
-              CardHome(Icons.list, "Liste des clients", '/listClient'),
+              CardHome(Icons.list, "Liste des clients", ListClient()),
+              CardHome(Icons.list, "Liste des clients", ListClient()),
             ],
           ),
         ],

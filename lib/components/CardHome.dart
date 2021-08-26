@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CardHome extends StatefulWidget {
   IconData icon;
   String textToApply;
-  String route;
+  Widget route;
 
   CardHome(this.icon, this.textToApply, this.route);
 
@@ -29,7 +29,12 @@ class _CardHomeState extends State<CardHome> {
               size: 30,
             ),
             onPressed: () {
-              Navigator.of(context).pushNamed(widget.route);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                    widget.route),
+              );
             },
           ),
         ),
