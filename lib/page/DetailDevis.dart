@@ -16,7 +16,7 @@ class DetailDevis extends StatefulWidget {
 
 class _DetailDevisState extends State<DetailDevis> {
   String clientName = "";
-  Map test = Map();
+  Map listModule = Map();
   final ScrollController scrollController = ScrollController();
 
   Future<void> getClient(id) async {
@@ -33,10 +33,10 @@ class _DetailDevisState extends State<DetailDevis> {
   Future<void> getModule(id, value) async {
     API api = new API();
     var response = await api.getRequest(route: '/module/${id}');
-    Module clients = Module.module(response["body"]);
+    Module module = Module.module(response["body"]);
     if (mounted) {
       this.setState(() {
-        this.test[clients] = value;
+        this.listModule[module] = value;
       });
     }
   }
@@ -52,7 +52,7 @@ class _DetailDevisState extends State<DetailDevis> {
         map[element] += 1;
       }
     });
-    print(map);
+
     map.forEach((key, value) {
       getModule(key, value);
     });
@@ -71,7 +71,10 @@ class _DetailDevisState extends State<DetailDevis> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                margin: EdgeInsets.only(left: 7,right: 7,),
+                  margin: EdgeInsets.only(
+                    left: 7,
+                    right: 7,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -79,7 +82,7 @@ class _DetailDevisState extends State<DetailDevis> {
                       BoxShadow(
                         color: Colors.grey,
                         offset: Offset(0.0, 1.0), //(x,y)
-                        blurRadius: 10.0,// shadow direction: bottom right
+                        blurRadius: 10.0, // shadow direction: bottom right
                       )
                     ],
                   ),
@@ -87,7 +90,8 @@ class _DetailDevisState extends State<DetailDevis> {
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 20),
+                          margin: EdgeInsets.only(
+                              left: 15, right: 15, top: 10, bottom: 20),
                           child: Column(
                             children: [
                               DetailElement(
@@ -106,14 +110,15 @@ class _DetailDevisState extends State<DetailDevis> {
                   )),
             ),
             Expanded(
-              child: Column(
-                children: [
-                  Text("Liste Modules",style: TextStyle(height: 2,fontSize: 20),),
-                  Expanded(child: _buildList()),
-                ],
-              )
-
-            )
+                child: Column(
+              children: [
+                Text(
+                  "Liste Modules",
+                  style: TextStyle(height: 2, fontSize: 20),
+                ),
+                Expanded(child: _buildList()),
+              ],
+            ))
           ],
         ),
       ),
@@ -122,17 +127,15 @@ class _DetailDevisState extends State<DetailDevis> {
 
   Widget _buildList() {
     return ListView.builder(
-      itemCount: test.length,
+      itemCount: listModule.length,
       itemBuilder: (context, index) {
-        Module key = test.keys.elementAt(index);
+        Module key = listModule.keys.elementAt(index);
         return Card(
-          elevation: 10,
-          margin: EdgeInsets.only(left: 15,right: 15,top: 10),
-          child: ListTile(
-              title: Text(key.nomModule),
-              subtitle: Text("${test[key].toString()} exemplaire")
-          )
-        );
+            elevation: 10,
+            margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+            child: ListTile(
+                title: Text(key.nomModule),
+                subtitle: Text("${listModule[key].toString()} exemplaire")));
       },
     );
   }

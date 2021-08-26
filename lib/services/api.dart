@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import 'package:madera_mobile/classes/Clients.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:madera_mobile/classes/Clients.dart';
 import 'package:madera_mobile/classes/User.dart';
 
 import '../globals.dart' as globals;
@@ -71,8 +71,7 @@ class API {
       result["code"] = 1;
       result["body"] = "error";
     }
-    print(response.body);
-    print(client.toJson());
+
     return result;
   }
 }

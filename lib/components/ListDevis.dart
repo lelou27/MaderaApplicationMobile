@@ -21,9 +21,9 @@ class _ListDevisState extends State<ListDevis> {
     API api = new API();
     var response =
         await api.getRequest(route: '/devis/all${id == "" ? 'Cs' : '/${id}'}');
-    print(response);
+
     List<Devis> devis = Devis.devisList(response["body"]);
-    print(devis);
+
     if (mounted) {
       this.setState(() {
         this.devis = devis;
@@ -51,23 +51,22 @@ class _ListDevisState extends State<ListDevis> {
                     itemCount: devis.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        elevation: 10,
-                        margin: EdgeInsets.only(left: 15,right: 15,top: 10),
-                        child: ListTile(
-                          title: Text(
-                            devis[index].nomProjet,
-                          ),
-                          subtitle: Text(devis[index].dateDevis),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailDevis(devis[index])),
-                            );
-                          },
-                        )
-                      );
+                          elevation: 10,
+                          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                          child: ListTile(
+                            title: Text(
+                              devis[index].nomProjet,
+                            ),
+                            subtitle: Text(devis[index].dateDevis),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailDevis(devis[index])),
+                              );
+                            },
+                          ));
                     },
                   ),
                 ),
