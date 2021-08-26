@@ -25,14 +25,21 @@ class API {
     Map<String, dynamic> result = {"code": 1, "body": ""};
 
     Uri url = Uri.parse('$API_URL$route');
-    var response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      result["code"] = 0;
-      result["body"] = jsonDecode(response.body);
-    } else {
+    try {
+      var response = await http.get(url).timeout(Duration(seconds: 3));
+
+      if (response.statusCode == 200) {
+        result["code"] = 0;
+        result["body"] = jsonDecode(response.body);
+      } else {
+        result["code"] = 1;
+        result["body"] = [];
+        getErrorMessage(context);
+      }
+    } catch (e) {
       result["code"] = 1;
-      result["body"] = "error";
+      result["body"] = [];
       getErrorMessage(context);
     }
 
@@ -53,19 +60,29 @@ class API {
     return response.data;
   }
 
-  Future<Map<String, dynamic>> auth(User user) async {
+  Future<Map<String, dynamic>> auth(User user, context) async {
     Map<String, dynamic> result = {"code": 1, "body": ""};
 
     Uri url = Uri.parse('$API_URL/auth/login');
-    var response = await http.post(url, body: user.toJson());
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      result["code"] = 0;
-      result["body"] = jsonDecode(response.body);
-    } else {
+    try {
+      var response = await http
+          .post(url, body: user.toJson())
+          .timeout(Duration(seconds: 3));
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        result["code"] = 0;
+        result["body"] = jsonDecode(response.body);
+      } else {
+        result["code"] = 1;
+        result["body"] = "error";
+      }
+    } catch (e) {
       result["code"] = 1;
-      result["body"] = "error";
+      result["body"] = "apierror";
+      getErrorMessage(context);
     }
+
     return result;
   }
 
@@ -73,14 +90,22 @@ class API {
     Map<String, dynamic> result = {"code": 1, "body": ""};
 
     Uri url = Uri.parse('$API_URL/client/create');
-    var response = await http.post(url, body: client.toJson());
+    try {
+      var response = await http
+          .post(url, body: client.toJson())
+          .timeout(Duration(seconds: 1));
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      result["code"] = 0;
-      result["body"] = jsonDecode(response.body);
-    } else {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        result["code"] = 0;
+        result["body"] = jsonDecode(response.body);
+      } else {
+        result["code"] = 1;
+        result["body"] = [];
+        getErrorMessage(context);
+      }
+    } catch (e) {
       result["code"] = 1;
-      result["body"] = "error";
+      result["body"] = [];
       getErrorMessage(context);
     }
 

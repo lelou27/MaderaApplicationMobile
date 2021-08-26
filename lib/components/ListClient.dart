@@ -13,6 +13,7 @@ class ListClient extends StatefulWidget {
 
 class _ListClientState extends State<ListClient> {
   List<Client> clients = [];
+  bool _haveError = false;
 
   void initState() {
     super.initState();
@@ -23,9 +24,15 @@ class _ListClientState extends State<ListClient> {
     API api = new API();
     var response = await api.getRequest(route: '/client', context: context);
 
+    if (response["code"] == 1) {
+      setState(() {
+        _haveError = true;
+      });
+    }
+
     List<Client> clients = Client.clientsList(response["body"]);
 
-    if (mounted) {
+    if (mounted && clients.length != 0) {
       this.setState(() {
         this.clients = clients;
       });
@@ -34,6 +41,21 @@ class _ListClientState extends State<ListClient> {
 
   @override
   Widget build(BuildContext context) {
+    if (_haveError) {
+      return SafeArea(
+        child: Scaffold(
+          appBar: getAppBar(context),
+          backgroundColor: Color(0xffE5E5E5),
+          body: Center(
+            child: Text(
+              "Une erreur est survenur lors de la récupération des données.",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
+      );
+    }
+
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),

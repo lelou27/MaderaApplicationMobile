@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:madera_mobile/classes/Clients.dart';
+import 'package:madera_mobile/components/MaderaAppBar.dart';
 import 'package:madera_mobile/services/api.dart';
 
 class AjoutClientPage extends StatefulWidget {
@@ -43,7 +44,30 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
           ajoutcli["code"] == 1 ? "Erreur dans l'ajout du client." : "";
     });
 
-    if (ajoutcli["code"] == 1) return;
+    if (ajoutcli["code"] == 1) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(
+                "Erreur",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.red),
+              ),
+              content: Text("Erreur lors de la création du client."),
+              actions: [
+                TextButton(
+                  child: const Text('Fermer'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+      return;
+    }
+
     final snackBar = SnackBar(content: Text('Client ajouté'));
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -55,6 +79,7 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: getAppBar(context),
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(45),
