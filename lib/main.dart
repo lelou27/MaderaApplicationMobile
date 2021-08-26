@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:madera_mobile/ajoutCLient/ajoutClient.dart';
 import 'package:madera_mobile/auth/login.dart';
 import 'package:madera_mobile/components/ListClient.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
+import 'package:madera_mobile/errors/NoConnexion.dart';
 import 'package:madera_mobile/page/Home.dart';
 
 import 'globals.dart' as globals;
@@ -39,16 +42,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isLogged = false;
+  bool _isLogged = true;
+  bool _apiIsUp = true;
 
   void initState() {
     super.initState();
+
+    checkApi();
 
     globals.isLogged().then((bool isLogged) {
       setState(() {
         _isLogged = isLogged;
       });
     });
+  }
+
+  Future<void> checkApi() async {
+    try {
+      var apiIsUp = await globals.api.getRequest(
+        route: "/up",
+        context: context,
+      );
+
+      if (apiIsUp['code'] == 0) {
+        setState(() => _apiIsUp = true);
+      } else {
+        setState(() => _apiIsUp = false);
+      }
+    } catch (e) {
+      setState(() => _apiIsUp = false);
+    }
   }
 
   void logout() {
@@ -61,6 +84,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!_apiIsUp) {
+      return SafeArea(
+        child: Scaffold(
+          body: NoConnexion(),
+        ),
+      );
+    }
+
     if (!_isLogged) {
       return SafeArea(
         child: Scaffold(
@@ -74,8 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),
-        body: Center(
-          child: HomePage(),
+        body: SingleChildScrollView(
+          child: Center(
+            child: HomePage(),
+          ),
         ),
       ),
     );

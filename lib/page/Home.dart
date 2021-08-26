@@ -15,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(top: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -47,7 +48,18 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               CardHome(Icons.list, "Liste des clients", ListClient()),
-                CardHome(Icons.list_alt, "Liste des devis", ListDevis(new Client(id: "", first_name: "first_name", mail: "mail", phone: "phone", address: "address", postal_code: "postal_code", city: "city", country: "country"))),
+              CardHome(
+                  Icons.list_alt,
+                  "Liste des devis",
+                  ListDevis(new Client(
+                      id: "",
+                      first_name: "first_name",
+                      mail: "mail",
+                      phone: "phone",
+                      address: "address",
+                      postal_code: "postal_code",
+                      city: "city",
+                      country: "country"))),
             ],
           ),
           Row(

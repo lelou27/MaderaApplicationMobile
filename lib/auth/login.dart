@@ -27,12 +27,14 @@ class _LoginPageState extends State<LoginPage> {
 
     API api = new API();
     User user = new User(username: _identifiant, password: _password);
-    Map<String, dynamic> auth = await api.auth(user);
+    Map<String, dynamic> auth = await api.auth(user, context);
 
     setState(() {
-      _errorLogin = auth["code"] == 1
-          ? "Les identifiants renseignés sont incorrects."
-          : "";
+      if (auth["code"] == 1 && auth["body"] == 'apierror') {
+        _errorLogin = "Erreur de connexion avec le serveur d'authentification.";
+      } else if (auth["code"] == 1 && auth["body"] == 'error') {
+        _errorLogin = "Les identifiants renseignés sont incorrects.";
+      }
     });
 
     if (auth["code"] == 1) return;
