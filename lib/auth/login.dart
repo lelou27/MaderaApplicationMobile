@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(
-                        icon: Icon(Icons.password),
+                        icon: Icon(Icons.lock),
                         hintText: 'Mot de passe',
                         labelText: 'Mot de passe *',
                         suffix: InkWell(

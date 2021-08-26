@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
@@ -37,42 +38,45 @@ class _ListClientState extends State<ListClient> {
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),
+        backgroundColor: Color(0xffE5E5E5),
         body: clients.length == 0
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Column(children: [
+            : Column(
+
+            children: [
                 Expanded(
                   child: ListView.builder(
                     itemCount: clients.length,
                     itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          clients[index].first_name,
-                        ),
-                        subtitle: Text(clients[index].mail),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailClient(clients[index])),
-                          );
-
-                          // SnackBar snackBar = SnackBar(
-                          //     content: Text("Tapped : ${clients[index].id}"));
-                          // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        trailing: IconButton(
-                          icon: new Icon(Icons.info_outline),
-                          onPressed: () {
+                      return Card(
+                        elevation: 10,
+                        margin: EdgeInsets.only(left: 15,right: 15,top: 10),
+                        child: ListTile(
+                          title: Text(
+                            clients[index].first_name,
+                          ),
+                          subtitle: Text(clients[index].mail),
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      ListDevis(clients[index])),
+                                      DetailClient(clients[index])),
                             );
                           },
+                          trailing: IconButton(
+                            icon: new Icon(Icons.info_outline),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ListDevis(clients[index])),
+                              );
+                            },
+                          ),
                         ),
                       );
                     },

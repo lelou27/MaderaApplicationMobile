@@ -64,21 +64,30 @@ class _DetailDevisState extends State<DetailDevis> {
     return SafeArea(
       child: Scaffold(
         appBar: getAppBar(context),
+        backgroundColor: Color(0xffE5E5E5),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
+                margin: EdgeInsets.only(left: 7,right: 7,),
                   decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 10.0,// shadow direction: bottom right
+                      )
+                    ],
                   ),
                   child: Center(
                     child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(20),
+                          margin: EdgeInsets.only(left: 15,right: 15,top: 10,bottom: 20),
                           child: Column(
                             children: [
                               DetailElement(
@@ -97,7 +106,13 @@ class _DetailDevisState extends State<DetailDevis> {
                   )),
             ),
             Expanded(
-              child: _buildList(),
+              child: Column(
+                children: [
+                  Text("Liste Modules",style: TextStyle(height: 2,fontSize: 20),),
+                  Expanded(child: _buildList()),
+                ],
+              )
+
             )
           ],
         ),
@@ -110,9 +125,14 @@ class _DetailDevisState extends State<DetailDevis> {
       itemCount: test.length,
       itemBuilder: (context, index) {
         Module key = test.keys.elementAt(index);
-        return ListTile(
-            title: Text(key.nomModule),
-            subtitle: Text("${test[key].toString()} exemplaire"));
+        return Card(
+          elevation: 10,
+          margin: EdgeInsets.only(left: 15,right: 15,top: 10),
+          child: ListTile(
+              title: Text(key.nomModule),
+              subtitle: Text("${test[key].toString()} exemplaire")
+          )
+        );
       },
     );
   }
