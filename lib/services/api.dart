@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:madera_mobile/classes/Clients.dart';
@@ -11,7 +12,16 @@ import '../globals.dart' as globals;
 class API {
   final String API_URL = globals.apiUrl;
 
-  Future<Map<String, dynamic>> getRequest({required String route}) async {
+  void getErrorMessage(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Erreur lors de la récupation des données."),
+      backgroundColor: Colors.red,
+      elevation: 10,
+    ));
+  }
+
+  Future<Map<String, dynamic>> getRequest(
+      {required String route, required BuildContext context}) async {
     Map<String, dynamic> result = {"code": 1, "body": ""};
 
     Uri url = Uri.parse('$API_URL$route');
@@ -23,6 +33,7 @@ class API {
     } else {
       result["code"] = 1;
       result["body"] = "error";
+      getErrorMessage(context);
     }
 
     return result;
@@ -58,7 +69,7 @@ class API {
     return result;
   }
 
-  Future<Map<String, dynamic>> ajoutcli(Client client) async {
+  Future<Map<String, dynamic>> ajoutcli(Client client, context) async {
     Map<String, dynamic> result = {"code": 1, "body": ""};
 
     Uri url = Uri.parse('$API_URL/client/create');
@@ -70,6 +81,7 @@ class API {
     } else {
       result["code"] = 1;
       result["body"] = "error";
+      getErrorMessage(context);
     }
 
     return result;

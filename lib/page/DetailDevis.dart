@@ -21,7 +21,10 @@ class _DetailDevisState extends State<DetailDevis> {
 
   Future<void> getClient(id) async {
     API api = new API();
-    var response = await api.getRequest(route: '/client/${id}');
+    var response = await api.getRequest(
+      route: '/client/${id}',
+      context: context,
+    );
     Client clients = Client.client(response["body"]);
     if (mounted) {
       this.setState(() {
@@ -32,7 +35,10 @@ class _DetailDevisState extends State<DetailDevis> {
 
   Future<void> getModule(id, value) async {
     API api = new API();
-    var response = await api.getRequest(route: '/module/${id}');
+    var response = await api.getRequest(
+      route: '/module/${id}',
+      context: context,
+    );
     Module module = Module.module(response["body"]);
     if (mounted) {
       this.setState(() {

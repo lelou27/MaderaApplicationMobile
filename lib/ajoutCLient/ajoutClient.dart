@@ -36,8 +36,7 @@ class _AjoutClientPageState extends State<AjoutClientPage> {
         city: _city,
         phone: _phone,
         country: _country);
-    Map<String, dynamic> ajoutcli = await api.ajoutcli(client);
-    // Map<String, dynamic> auth = await api.auth(user);
+    Map<String, dynamic> ajoutcli = await api.ajoutcli(client, context);
 
     setState(() {
       _errorLogin =

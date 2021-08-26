@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:madera_mobile/classes/Clients.dart';
@@ -22,7 +21,7 @@ class _ListClientState extends State<ListClient> {
 
   Future<void> getClients() async {
     API api = new API();
-    var response = await api.getRequest(route: '/client');
+    var response = await api.getRequest(route: '/client', context: context);
 
     List<Client> clients = Client.clientsList(response["body"]);
 
@@ -43,16 +42,14 @@ class _ListClientState extends State<ListClient> {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : Column(
-
-            children: [
+            : Column(children: [
                 Expanded(
                   child: ListView.builder(
                     itemCount: clients.length,
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 10,
-                        margin: EdgeInsets.only(left: 15,right: 15,top: 10),
+                        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                         child: ListTile(
                           title: Text(
                             clients[index].first_name,

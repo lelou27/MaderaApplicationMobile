@@ -19,8 +19,8 @@ class _ListDevisState extends State<ListDevis> {
 
   Future<void> getDevis(id) async {
     API api = new API();
-    var response =
-        await api.getRequest(route: '/devis/all${id == "" ? 'Cs' : '/${id}'}');
+    var response = await api.getRequest(
+        route: '/devis/all${id == "" ? 'Cs' : '/${id}'}', context: context);
 
     List<Devis> devis = Devis.devisList(response["body"]);
 
