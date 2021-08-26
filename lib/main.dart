@@ -73,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: getAppBar(context),
         body: Center(
           child: HomePage(),
         ),
