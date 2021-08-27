@@ -147,7 +147,7 @@ class _DetailDevisState extends State<DetailDevis> {
                     )),
               ),
               Text(
-                "Liste Modules",
+                "Liste des modules",
                 style: TextStyle(height: 2, fontSize: 20),
               ),
               _buildList()
@@ -163,12 +163,13 @@ class _DetailDevisState extends State<DetailDevis> {
       shrinkWrap: true,
       primary: false,
       physics: NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
       itemCount: listModule.length,
       itemBuilder: (context, index) {
         Module key = listModule.keys.elementAt(index);
         return Card(
             elevation: 10,
-            margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+            margin: EdgeInsets.only( top: 5, bottom: 5),
             child: ListTile(
                 title: Text(key.nomModule),
                 subtitle: Text("${listModule[key].toString()} exemplaire")));

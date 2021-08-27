@@ -45,14 +45,17 @@ class _ListDevisState extends State<ListDevis> {
             ? Center(
                 child: Text("Pas de devis"),
               )
-            : Column(children: [
+            : Container(
+          child:  Column(
+              children: [
                 Expanded(
                   child: ListView.builder(
                     itemCount: devis.length,
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                     itemBuilder: (context, index) {
                       return Card(
                           elevation: 10,
-                          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                          margin: EdgeInsets.only( top: 5, bottom: 5),
                           child: ListTile(
                             title: Text(
                               devis[index].nomProjet,
@@ -71,6 +74,8 @@ class _ListDevisState extends State<ListDevis> {
                   ),
                 ),
               ]),
+        )
+
       ),
     );
   }

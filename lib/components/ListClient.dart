@@ -68,10 +68,11 @@ class _ListClientState extends State<ListClient> {
                 Expanded(
                   child: ListView.builder(
                     itemCount: clients.length,
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 10,
-                        margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                        margin: EdgeInsets.only( top: 5, bottom: 5),
                         child: ListTile(
                           title: Text(
                             clients[index].first_name,
