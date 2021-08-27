@@ -7,6 +7,8 @@ import 'package:madera_mobile/components/DetailElement.dart';
 import 'package:madera_mobile/components/MaderaAppBar.dart';
 import 'package:madera_mobile/services/api.dart';
 
+import '../globals.dart' as globals;
+
 class DetailDevis extends StatefulWidget {
   final Devis devis;
   DetailDevis(this.devis);
@@ -34,17 +36,20 @@ class _DetailDevisState extends State<DetailDevis> {
   }
 
   Future<void> getModule(id, value) async {
-    API api = new API();
-    var response = await api.getRequest(
-      route: '/module/${id}',
-      context: context,
-    );
-    Module module = Module.module(response["body"]);
-    if (mounted) {
-      this.setState(() {
-        this.listModule[module] = value;
-      });
-    }
+    try {
+      var response = await globals.api.getRequest(
+        route: '/module/${id}',
+        context: context,
+      );
+      if (response["body"].length != 0) {
+        Module module = Module.module(response["body"]);
+        if (mounted) {
+          this.setState(() {
+            this.listModule[module] = value;
+          });
+        }
+      }
+    } catch (e) {}
   }
 
   void initState() {
@@ -67,7 +72,8 @@ class _DetailDevisState extends State<DetailDevis> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return SafeArea(
       child: Scaffold(
@@ -77,69 +83,69 @@ class _DetailDevisState extends State<DetailDevis> {
           physics: ScrollPhysics(),
           child: Column(
             children: <Widget>[
-
-          Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-              margin: EdgeInsets.only(
-                left: 7,
-                right: 7,
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 1.0), //(x,y)
-                    blurRadius: 10.0, // shadow direction: bottom right
-                  )
-                ],
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          left: 15, right: 15, top: 10, bottom: 20),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                    margin: EdgeInsets.only(
+                      left: 7,
+                      right: 7,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0.0, 1.0), //(x,y)
+                          blurRadius: 10.0, // shadow direction: bottom right
+                        )
+                      ],
+                    ),
+                    child: Center(
                       child: Column(
                         children: [
-                          DetailElement(
-                              title: 'Nom du projet',
-                              data: widget.devis.nomProjet),
-                          isLandscape ?
-                          Column(
+                          Container(
+                            margin: EdgeInsets.only(
+                                left: 15, right: 15, top: 10, bottom: 20),
+                            child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(child: DetailElement(
-                                        title: 'Date du devis',
-                                        data: widget.devis.dateDevis),),
-                                    Expanded(child: DetailElement(
-                                        title: 'Nom du Client',
-                                        data: clientName),)
-
-                                  ],
-                                )
-                              ]
-                          ):
-                          Column(
-                            children: [
-                              DetailElement(
-                                  title: 'Date du devis',
-                                  data: widget.devis.dateDevis),
-                              DetailElement(
-                                  title: 'Nom du Client', data: clientName),
-                            ],
+                                DetailElement(
+                                    title: 'Nom du projet',
+                                    data: widget.devis.nomProjet),
+                                isLandscape
+                                    ? Column(children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: DetailElement(
+                                                  title: 'Date du devis',
+                                                  data: widget.devis.dateDevis),
+                                            ),
+                                            Expanded(
+                                              child: DetailElement(
+                                                  title: 'Nom du Client',
+                                                  data: clientName),
+                                            )
+                                          ],
+                                        )
+                                      ])
+                                    : Column(
+                                        children: [
+                                          DetailElement(
+                                              title: 'Date du devis',
+                                              data: widget.devis.dateDevis),
+                                          DetailElement(
+                                              title: 'Nom du Client',
+                                              data: clientName),
+                                        ],
+                                      ),
+                              ],
+                            ),
                           ),
-
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              )),
-          ),
+                    )),
+              ),
               Text(
                 "Liste Modules",
                 style: TextStyle(height: 2, fontSize: 20),

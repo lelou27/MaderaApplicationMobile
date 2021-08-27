@@ -27,7 +27,7 @@ class API {
     Uri url = Uri.parse('$API_URL$route');
 
     try {
-      var response = await http.get(url).timeout(Duration(seconds: 3));
+      var response = await http.get(url).timeout(Duration(seconds: 5));
 
       if (response.statusCode == 200) {
         result["code"] = 0;
