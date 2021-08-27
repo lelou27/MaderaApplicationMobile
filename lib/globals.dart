@@ -20,7 +20,11 @@ Future<bool> isLogged() async {
   List<String>? userPrefs = prefs.getStringList("user");
 
   if (userPrefs != null && userPrefs.length != 0) {
-    globalUser = new User(username: userPrefs[0], password: "");
+    globalUser = new User(
+        username: userPrefs[0],
+        password: "",
+        access_token: userPrefs[1],
+        role: userPrefs[2]);
     isLoggedIn = true;
   }
 

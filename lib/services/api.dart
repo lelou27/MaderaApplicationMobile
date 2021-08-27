@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,11 @@ import '../globals.dart' as globals;
 class API {
   final String API_URL = globals.apiUrl;
 
-  void getErrorMessage(BuildContext context) {
+  void getErrorMessage(BuildContext context, [String message = ""]) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Erreur lors de la récupation des données."),
+      content: Text(message != ""
+          ? message
+          : "Erreur lors de la récupation des données."),
       backgroundColor: Colors.red,
       elevation: 10,
     ));
@@ -27,7 +30,22 @@ class API {
     Uri url = Uri.parse('$API_URL$route');
 
     try {
-      var response = await http.get(url).timeout(Duration(seconds: 5));
+      var response = await http.get(url, headers: {
+        HttpHeaders.authorizationHeader:
+            'Bearer ${globals.globalUser.access_token}',
+      }).timeout(Duration(seconds: 5));
+
+      if (response.statusCode == 401) {
+        await globals.logout(context);
+        getErrorMessage(context, "Veuillez vous reconnecter à l'application");
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+
+        result["code"] = 1;
+        result["body"] = [];
+
+        return result;
+      }
 
       if (response.statusCode == 200) {
         result["code"] = 0;
