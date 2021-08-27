@@ -73,17 +73,27 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return SafeArea(
       child: Scaffold(
         body: Center(
           child: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(45),
+              padding: EdgeInsets.only(left: 45,right: 45),
               child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      margin:  EdgeInsets.only(bottom: isLandscape? 0: 60),
+                      child: Image.asset(
+                        "./assets/imgs/logo.png",
+                        color: Colors.blue,
+                      ),
+                    ),
+
                     TextFormField(
                       decoration: const InputDecoration(
                         icon: Icon(Icons.person),
@@ -97,9 +107,6 @@ class _LoginPageState extends State<LoginPage> {
                             ? 'Veuillez saisir un identifiant.'
                             : null;
                       },
-                    ),
-                    SizedBox(
-                      height: 50,
                     ),
                     TextFormField(
                       decoration: InputDecoration(
@@ -122,14 +129,11 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.only(top: 50),
                       child: Text(
                         _errorLogin != "" ? _errorLogin : "",
                         style: TextStyle(color: Colors.red, fontSize: 16),
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
                     ),
                     ElevatedButton(
                       onPressed: login,
